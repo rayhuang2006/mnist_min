@@ -16,3 +16,7 @@ tf_keras
 onnx_graphsurgeon
 psutil
 sng4onnx
+
+# 開啟瀏覽器介面（Gradio）
+#gradio==4.28.3
+gradio

@@ -10,9 +10,12 @@
 - 推論友善：`infer.py` 可對單張 PNG 進行預測，會輸出每個類別機率。
 
 ## 環境需求
-- Python 3.9+
+- Python 3.9+(basic), 3.10+(for gradio app.py running)
 - 安裝依賴：
   ```bash
+  conda create -n MNIST-Min-3.10 python=3.10 -y
+  conda activate MNIST-Min-3.10
+
   pip install -r requirements.txt
   ```
 
@@ -55,7 +58,8 @@ mnist_min/
 ├─ export_onnx.py      # ONNX 匯出
 ├─ export_tflite.py    # TFLite 匯出
 ├─ onnxruntime_infer.py # ONNX Runtime 對單張 PNG 進行推論
-└─ mnist_min.ipynb     # Jupyter Notebook（一鍵流程）：訓練→測試→匯出 ONNX→產生樣本→單張推論→顯示曲線
+├─ mnist_min.ipynb     # Jupyter Notebook（一鍵流程）：訓練→測試→匯出 ONNX→產生樣本→單張推論→顯示曲線
+└─ app.py              # 開啟瀏覽器介面（Gradio）
 ```
 
 ## 小提示
@@ -74,7 +78,7 @@ mnist_min/
 - **ONNX 匯出**：`python export_onnx.py --model model.pth --out model.onnx`
 - **Notebook**：開啟 `mnist_min.ipynb`，一鍵跑完整流程。
 
-### 訓練曲線圖
+### 1) 訓練曲線圖
 ```bash
 pip install matplotlib
 
@@ -85,21 +89,31 @@ python train.py --epochs 3 --save-plots
 python plot_history.py --history history.json --out-dir .
 ```
 
-### ONNX 匯出
+### 2) ONNX 匯出
 ```bash
 pip install onnx
 python export_onnx.py --model model.pth --out model.onnx --opset 13
 ```
 
-### ONNX Runtime 推論
+### 3) ONNX Runtime 推論
 ```bash
 pip install onnxruntime
 python onnxruntime_infer.py --onnx model.onnx --image samples/0.png
 ```
 
-### TFLite 匯出
+### 4) TFLite 匯出
 ```bash
 pip install onnx onnx2tf tensorflow
-pip install tf_keras onnx_graphsurgeon psutil sng4onnx
+pip install tf_keras onnx_graphsurgeon psutil sng4onnx ai_edge_litert
 python export_tflite.py --onnx model.onnx --out model.tflite --quant int8
 ```
+
+### 5) 開啟瀏覽器介面（Gradio）
+```bash
+pip install gradio
+python app.py
+```
+#### app.py 執行畫面
+![執行畫面](snapshots/app-1.png)
+#### app.py 模型預測結果
+![模型預測結果](snapshots/app-2.png)
