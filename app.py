@@ -4,6 +4,7 @@ from torch import nn
 from PIL import Image, ImageOps
 import numpy as np
 import json, os
+import netifaces as ni
 
 MODEL_PATH = "model.pth"
 CLASSES_PATH = "class_names.json"
@@ -75,5 +76,14 @@ demo = gr.Interface(
     description="上傳手寫數字圖片，系統會自動轉成 28×28 灰階並預測 0–9。"
 )
 
+for iface in ni.interfaces():
+    try:
+        ip = ni.ifaddresses(iface)[ni.AF_INET][0]['addr']
+        #print(f"🔹 {iface}: {ip}")
+        print(f"* App 可在 http://{ip}:7860 訪問")
+    except:
+        pass
+
 if __name__ == "__main__":
-    demo.launch()
+    #demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860, share=False)

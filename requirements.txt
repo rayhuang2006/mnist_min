@@ -20,3 +20,6 @@ sng4onnx
 # 開啟瀏覽器介面（Gradio）
 #gradio==4.28.3
 gradio
+
+# app.py
+netifaces
