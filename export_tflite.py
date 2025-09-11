@@ -35,7 +35,8 @@ def main():
     # 1) ONNX -> TF (SavedModel) via onnx2tf CLI
     if os.path.exists(args.tmp):
         shutil.rmtree(args.tmp)
-    run(['onnx2tf', '-i', args.onnx, '-o', args.tmp])
+    #run(['onnx2tf', '-i', args.onnx, '-o', args.tmp])
+    run(['onnx2tf', '-i', args.onnx, '-o', args.tmp, '--output_signaturedefs'])
 
     # 2) SavedModel -> TFLite
     import tensorflow as tf
