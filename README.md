@@ -16,6 +16,9 @@
   conda create -n MNIST-Min-3.10 python=3.10 -y
   conda activate MNIST-Min-3.10
 
+  tar -zxpvf mnist_min-250911.tgz
+  cd mnist_min
+  git checkout .
   pip install -r requirements.txt
   ```
 
