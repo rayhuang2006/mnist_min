@@ -1,3 +1,18 @@
 torch
 torchvision
 Pillow
+
+# 訓練曲線圖
+matplotlib
+
+# ONNX 匯出及推論
+onnx
+onnxruntime
+
+# 匯出 TFLite
+onnx2tf
+tensorflow
+tf_keras
+onnx_graphsurgeon
+psutil
+sng4onnx
