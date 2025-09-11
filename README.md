@@ -48,7 +48,14 @@ mnist_min/
 ├─ requirements.txt
 ├─ class_names.json    # 類別列表（訓練後生成）
 ├─ model.pth           # 已訓練模型（訓練後生成）
-└─ samples/            # 範例 PNG 與 labels.csv（由 make_samples.py 生成）
+├─ samples/            # 範例 PNG 與 labels.csv（由 make_samples.py 生成）
+|
+├─ plot_history.py     # 產生訓練曲線圖
+├─ model_card.md       # 模型卡：模型用途、資料、訓練方式、限制、倫理考量、匯出與部署方式
+├─ export_onnx.py      # ONNX 匯出
+├─ export_tflite.py    # TFLite 匯出
+├─ onnxruntime_infer.py # ONNX Runtime 對單張 PNG 進行推論
+└─ mnist_min.ipynb     # Jupyter Notebook（一鍵流程）：訓練→測試→匯出 ONNX→產生樣本→單張推論→顯示曲線
 ```
 
 ## 小提示
@@ -63,6 +70,36 @@ mnist_min/
 ---
 
 ## 進階功能
-- **ONNX 匯出**：`python export_onnx.py --model model.pth --out model.onnx`
 - **訓練曲線**：`python train.py --epochs 3 --save-plots` 或 `python plot_history.py`
+- **ONNX 匯出**：`python export_onnx.py --model model.pth --out model.onnx`
 - **Notebook**：開啟 `mnist_min.ipynb`，一鍵跑完整流程。
+
+### 訓練曲線圖
+```bash
+pip install matplotlib
+
+# train.py 會輸出 history.json，可加 --save-plots 直接產生 loss.png 與 acc.png
+python train.py --epochs 3 --save-plots
+
+# 或用 plot_history.py 讀取 history.json 繪圖：
+python plot_history.py --history history.json --out-dir .
+```
+
+### ONNX 匯出
+```bash
+pip install onnx
+python export_onnx.py --model model.pth --out model.onnx --opset 13
+```
+
+### ONNX Runtime 推論
+```bash
+pip install onnxruntime
+python onnxruntime_infer.py --onnx model.onnx --image samples/0.png
+```
+
+### TFLite 匯出
+```bash
+pip install onnx onnx2tf tensorflow
+pip install tf_keras onnx_graphsurgeon psutil sng4onnx
+python export_tflite.py --onnx model.onnx --out model.tflite --quant int8
+```
